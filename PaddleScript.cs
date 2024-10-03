@@ -13,6 +13,7 @@ public class PaddleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position += new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime, 0f, 0f);
+        Debug.Log(transform.position.x);    
     }
 }
