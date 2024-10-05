@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ballScript : MonoBehaviour
 {
@@ -16,14 +17,26 @@ public class ballScript : MonoBehaviour
     void Update()
     {
         transform.position += new Vector3(0f, 0f, -1 * speed * Time.deltaTime);
+                if(transform.position.z < -13.0f)
+        {
+            // Debug.Log("GameOver");
+            // Time.timeScale = 0;
+SceneManager.LoadScene("GameOverScene");
+        }   
     }
 
     private void OnCollisionEnter(Collision collision) // Removed the 's' here
     {
-        if(collision.gameObject.CompareTag("Paddle"))
+        if (collision.gameObject.CompareTag("Paddle"))
         {
             // ボールを破棄する
             Destroy(gameObject);
+            // 
+            collision.gameObject.transform.localScale -= new Vector3(Random.Range(0.2f, 1.0f),0f,0f);
+            if(collision.gameObject.transform.localScale.x < 1.0f)
+            {
+                collision.gameObject.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
         }
     } // Ensure this closing brace is for the class
 } // Ensure this is the closing brace for the ballScript class
